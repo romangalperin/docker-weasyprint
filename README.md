@@ -23,7 +23,7 @@ docker run -p 5001:5001 bcgovimages/weasyprint
 A `POST` to `/pdf` on port 5001 with an html body will result in a response containing a PDF. The filename may be set using a query parameter, e.g.:
 
 ```
-curl -X POST -d @test.html http://127.0.0.1:5001/pdf?filename=result.pdf
+curl -v -X POST -d @test.html -JLO http://127.0.0.1:5001/pdf?filename=result.pdf
 ```
 
 This example will use the file `test.html` and return a response with `Content-Type: application/pdf` and `Content-Disposition: inline; filename=result.pdf` headers.  The body of the response will be the PDF rendering of the html document.
