@@ -1,8 +1,19 @@
 ---
 title: WeasyPrint HTML to PDF Microservice
-description: A ready to use, OpenShift compatible, HTML to PDF microservice for your application. 
+description: A ready to use, OpenShift compatible, HTML to PDF microservice for your application.
+author: WadeBarnes
+resourceType: Components
+personas: 
+  - Developer
+  - Product Owner
+  - Designer
+labels:
+  - weasyprint
+  - html
+  - pdf
+  - microservice
 ---
-# Docker-WeasyPrint
+# WeasyPrint HTML to PDF Microservice
 
 This project bundles [Weasyprint](http://weasyprint.org/) into an easy to use, OpenShift compatible, HTML to PDF microservice with a simple REST interface.
 
