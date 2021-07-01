@@ -48,6 +48,27 @@ class TestPdf(unittest.TestCase):
         self.assertEqual(self.response.read()[:4], b'%PDF')
 
 
+class TestPng(unittest.TestCase):
+
+    def setUp(self):
+        request = request_factory('/png?filename=sample.png')
+        self.response = urlopen(request)
+
+    def tearDown(self):
+        self.response.close()
+
+    def test_response_code(self):
+        self.assertEqual(self.response.getcode(), 200)
+
+    def test_headers(self):
+        headers = dict(self.response.info())
+        self.assertEqual(headers['Content-Type'], 'image/png')
+        self.assertEqual(headers['Content-Disposition'], 'inline;filename=sample.png')
+
+    def test_body(self):
+        self.assertEqual(self.response.read()[:4], b'\x89PNG')
+
+
 class TestMultiple(unittest.TestCase):
 
     def setUp(self):

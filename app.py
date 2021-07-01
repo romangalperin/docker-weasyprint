@@ -34,7 +34,7 @@ def setup_logging():
 @app.route('/')
 def home():
     return '''
-        <h1>PDF Generator</h1>
+        <h1>PDF/PNG Generator</h1>
         <p>The following endpoints are available:</p>
         <ul>
             <li>POST to <code>/pdf?filename=myfile.pdf</code>. The body should
@@ -42,6 +42,8 @@ def home():
             <li>POST to <code>/multiple?filename=myfile.pdf</code>. The body
                 should contain a JSON list of html strings. They will each
                 be rendered and combined into a single pdf</li>
+            <li>POST to <code>/png?filename=myfile.png</code>. The body should
+                contain html</li>
         </ul>
     '''
 
@@ -58,6 +60,21 @@ def generate():
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline;filename=%s' % name
     app.logger.info(' ==> POST  /pdf?filename=%s  ok' % name)
+    return response
+
+
+@app.route('/png', methods=['POST'])
+def generate_png():
+    name = request.args.get('filename', 'unnamed.png')
+    app.logger.info('POST  /png?filename=%s' % name)
+    # print ( request.get_data() )
+    html = HTML(string=request.get_data())
+    css, font_config = css_for_extra_fonts()
+    png = html.write_png(stylesheets=[css], font_config=font_config)
+    response = make_response(png)
+    response.headers['Content-Type'] = 'image/png'
+    response.headers['Content-Disposition'] = 'inline;filename=%s' % name
+    app.logger.info(' ==> POST  /png?filename=%s  ok' % name)
     return response
 
 
