@@ -83,9 +83,9 @@ def multiple():
     name = request.args.get('filename', 'unnamed.pdf')
     app.logger.info('POST  /multiple?filename=%s' % name)
     htmls = json.loads(request.data.decode('utf-8'))
-    documents = [HTML(string=html).render() for html in htmls]
     css, font_config = css_for_extra_fonts()
-    pdf = documents[0].copy([page for doc in documents for page in doc.pages]).write_pdf(stylesheets=[css], font_config=font_config)
+    documents = [HTML(string=html).render(stylesheets=[css], font_config=font_config) for html in htmls]
+    pdf = documents[0].copy([page for doc in documents for page in doc.pages]).write_pdf()
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline;filename=%s' % name
