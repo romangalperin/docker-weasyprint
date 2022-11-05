@@ -29,6 +29,7 @@ ADD fonts /usr/share/fonts
 ADD requirements.txt /app/requirements.txt
 ADD fonts.py /app/fonts.py
 ADD app.py /app/app.py
+ADD test.css /app/test.css
 WORKDIR /app
 
 RUN python3 -m pip install -U setuptools
